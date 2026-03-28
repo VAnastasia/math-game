@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Счет в пределах 10</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section id="start-screen" class="screen">
+        <div class="top-row">
+          <button id="start-sound-toggle" class="button ghost sound-toggle" type="button">Звук: Вкл</button>
+        </div>
+        <h1>Счет в пределах 10</h1>
+        <p class="subtitle">Решай примеры как можно быстрее за 60 секунд.</p>
+        <label for="mode-select" class="mode-label">Режим</label>
+        <select id="mode-select" class="mode-select">
+          <option value="easy">Легкий: только + (60 сек)</option>
+          <option value="medium" selected>Средний: + и - (60 сек)</option>
+          <option value="fast">Быстрый: + и - (30 сек)</option>
+        </select>
+        <div class="best-score-card">
+          <span>Рекорд:</span>
+          <strong id="best-score-value">0</strong>
+        </div>
+        <button id="start-button" class="button primary" type="button">Начать</button>
+      </section>
+
+      <section id="game-screen" class="screen hidden" aria-live="polite">
+        <div class="top-row">
+          <p class="mode-pill">Режим: <strong id="game-mode-label">Средний</strong></p>
+          <button id="game-sound-toggle" class="button ghost sound-toggle" type="button">Звук: Вкл</button>
+        </div>
+        <header class="game-header">
+          <div class="stat">
+            <span>Время</span>
+            <strong id="timer">01:00</strong>
+          </div>
+          <div class="stat">
+            <span>Верно</span>
+            <strong id="correct-count">0</strong>
+          </div>
+          <div class="stat">
+            <span>Неверно</span>
+            <strong id="wrong-count">0</strong>
+          </div>
+        </header>
+
+        <p id="problem" class="problem">0 + 0 = ?</p>
+        <div class="streak-panel">
+          <p class="streak-line">Серия: <strong id="streak-value">0</strong></p>
+          <p id="streak-toast" class="streak-toast" role="status" aria-live="polite"></p>
+        </div>
+
+        <form id="answer-form" autocomplete="off">
+          <label for="answer-input" class="input-label">Твой ответ</label>
+          <input
+            id="answer-input"
+            class="answer-input"
+            type="number"
+            inputmode="numeric"
+            placeholder="Введи число"
+            required
+          />
+          <button class="button secondary" type="submit">Ответить</button>
+        </form>
+
+        <p id="feedback" class="feedback" role="status"></p>
+      </section>
+
+      <section id="result-screen" class="screen hidden">
+        <h2>Раунд завершен</h2>
+        <p class="subtitle">Посмотри результат и попробуй улучшить рекорд.</p>
+        <div class="results">
+          <p>Режим: <strong id="result-mode">Средний</strong></p>
+          <p>Верно: <strong id="result-correct">0</strong></p>
+          <p>Неверно: <strong id="result-wrong">0</strong></p>
+          <p>Точность: <strong id="result-accuracy">0%</strong></p>
+          <p>Макс. серия: <strong id="result-max-streak">0</strong></p>
+          <p>Рекорд: <strong id="result-best-score">0</strong></p>
+        </div>
+        <div class="history">
+          <h3>Последние 10 раундов</h3>
+          <p id="history-empty" class="history-empty hidden">Пока нет сыгранных раундов.</p>
+          <table id="history-table" class="history-table">
+            <thead>
+              <tr>
+                <th>Дата</th>
+                <th>Режим</th>
+                <th>Верно</th>
+                <th>Неверно</th>
+                <th>Точность</th>
+                <th>Макс. серия</th>
+              </tr>
+            </thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
+        <button id="restart-button" class="button primary" type="button">Играть снова</button>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
