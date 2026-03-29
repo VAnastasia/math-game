@@ -6,6 +6,7 @@ const STREAK_MILESTONES = [
   { value: 5, message: "Серия 5! Супер!" },
   { value: 10, message: "Серия 10! Ух ты!" },
 ];
+const ZERO_KEEP_CHANCE = 0.12;
 
 const MODES = {
   easy: {
@@ -185,15 +186,32 @@ function randomInt(maxInclusive) {
   return Math.floor(Math.random() * (maxInclusive + 1));
 }
 
+function randomFromRange(minInclusive, maxInclusive) {
+  return minInclusive + randomInt(maxInclusive - minInclusive);
+}
+
+function randomOperand(maxInclusive) {
+  if (maxInclusive <= 0) {
+    return 0;
+  }
+
+  const value = randomInt(maxInclusive);
+  if (value !== 0) {
+    return value;
+  }
+
+  return Math.random() < ZERO_KEEP_CHANCE ? 0 : randomFromRange(1, maxInclusive);
+}
+
 function generateAddition() {
-  const a = randomInt(10);
-  const b = randomInt(10 - a);
+  const a = randomOperand(10);
+  const b = randomOperand(10 - a);
   return { a, b, op: "+", answer: a + b };
 }
 
 function generateSubtraction() {
-  const a = randomInt(10);
-  const b = randomInt(a);
+  const a = randomOperand(10);
+  const b = randomOperand(a);
   return { a, b, op: "-", answer: a - b };
 }
 
@@ -366,19 +384,15 @@ function renderHistory() {
 
     const dateCell = document.createElement("td");
     const modeCell = document.createElement("td");
-    const correctCell = document.createElement("td");
-    const wrongCell = document.createElement("td");
+    const scoreCell = document.createElement("td");
     const accuracyCell = document.createElement("td");
-    const streakCell = document.createElement("td");
 
     dateCell.textContent = formatPlayedAt(item.playedAtISO);
     modeCell.textContent = item.modeLabel;
-    correctCell.textContent = String(item.correct);
-    wrongCell.textContent = String(item.wrong);
+    scoreCell.textContent = `${item.correct}/${item.wrong}`;
     accuracyCell.textContent = `${item.accuracy}%`;
-    streakCell.textContent = String(item.maxStreak || 0);
 
-    row.append(dateCell, modeCell, correctCell, wrongCell, accuracyCell, streakCell);
+    row.append(dateCell, modeCell, scoreCell, accuracyCell);
     historyBodyElement.appendChild(row);
   });
 }

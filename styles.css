@@ -299,21 +299,28 @@ h2 {
 .history-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.84rem;
+  line-height: 1.15;
 }
 
 .history-table th,
 .history-table td {
   text-align: left;
-  padding: 0.45rem 0.35rem;
+  padding: 0.34rem 0.24rem;
   border-bottom: 1px solid #e6edf4;
+  white-space: nowrap;
 }
 
 .history-table th {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   color: var(--text-soft);
+}
+
+.history-table th:nth-child(n + 3),
+.history-table td:nth-child(n + 3) {
+  text-align: center;
 }
 
 @media (max-width: 560px) {
@@ -337,12 +344,16 @@ h2 {
   }
 
   .history-table {
-    font-size: 0.78rem;
+    font-size: 0.73rem;
   }
 
   .history-table th,
   .history-table td {
-    padding: 0.35rem 0.2rem;
+    padding: 0.26rem 0.16rem;
+  }
+
+  .history-table th {
+    font-size: 0.66rem;
   }
 
   #game-screen .top-row {
